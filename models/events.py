@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 # 이벤트 모델
 class Event(Document):
-	id: int
 	title: str
 	image: str
 	description: str
