@@ -7,7 +7,6 @@ from models.events import Event
 class User(Document):
 	email: EmailStr
 	password: str
-	username: str
 	events: Optional[List[Event]]
 
 	class Settings:
@@ -17,21 +16,12 @@ class User(Document):
 		schema_extra = {
 			"example": {
 				"email": "fastapi@packt.com",
-				"username": "strong!!!",
+				"password": "strong!!!",
 				"events": [],
 			}
 		}
 
 # 사용자 로그인 모델
-class UserSignIn(BaseModel):
-	email: EmailStr
-	password: str
-
-	class Config:
-		schema_extra = {
-			"example": {
-				"email": "fastapi@packt.com",
-				"password": "strong!!!",
-				"events": [],
-			}
-		}
+class TokenResponse(BaseModel):
+	access_token: str
+	token_type: str

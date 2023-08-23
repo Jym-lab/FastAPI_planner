@@ -47,6 +47,7 @@ class Database:
  
 
 class Settings(BaseSettings):
+	SECRET_KEY: Optional[str] = None
 	DATABASE_URL: Optional[str] = None
 
 	# 데이터베이스를 초기화 함
