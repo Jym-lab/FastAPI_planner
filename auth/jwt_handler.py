@@ -22,7 +22,7 @@ def create_access_token(user: str):
 def verify_access_token(token: str):
 	try:
 		data = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-		expire = data.get("expiores")
+		expire = data.get("expires")
 
 		# 토큰의 만료시간이 존재하는지 검사함
 		# 없으면 유효한 토큰이 없다고 판단

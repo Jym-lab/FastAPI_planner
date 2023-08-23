@@ -1,9 +1,11 @@
 from typing import List
 from beanie import PydanticObjectId
-from fastapi import APIRouter, Body, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, status
 from database.connetion import Database
 
 from models.events import Event, EventUpdate
+from auth.authenticate import authenticate
+
 
 event_router = APIRouter(
 	tags=["Events"]
@@ -27,7 +29,7 @@ async def retrieve_event(id: PydanticObjectId) -> Event:
 	)
 	return event
 @event_router.post("/new")
-async def create_event(body: Event) -> dict:
+async def create_event(body: Event, user: str=Depends(authenticate)) -> dict:
 	await event_database.save(body)
 	return {
 		"message": "Event created successfully."
@@ -44,7 +46,7 @@ async def update_event(id: PydanticObjectId, body: EventUpdate) -> Event:
 	return updated_event
 
 @event_router.delete("/{id}")
-async def delete_event(id: PydanticObjectId) -> dict:
+async def delete_event(id: PydanticObjectId, user: str=Depends(authenticate)) -> dict:
 	event = await event_database.delete(id)
 	if not event:
 		raise HTTPException(
