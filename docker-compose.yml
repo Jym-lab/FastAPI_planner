@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api:
+    build: .
+    image: event-planner-api:latest
+    ports:
+      - "80:80"
+    env_file:
+      - .env.prod
+
+  database:
+    image: mongo:5.0.15
+    ports:
+      - "27017"
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:
