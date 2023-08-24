@@ -24,10 +24,10 @@ async def sign_user_in(user: OAuth2PasswordRequestForm = Depends()) -> dict:
 			status_code=status.HTTP_404_NOT_FOUND,
 			detail="User with email does not exist"
 		)
-	if user_exist.password == user.password:
-		return {
-			"message": "User signed in successfully."
-		}
+	# if user_exist.password == user.password:
+	# 	return {
+	# 		"message": "User signed in successfully."
+	# 	}
 	if hash_password.verify_hash(user.password, user_exist.password):
 		access_token = create_access_token(user_exist.email)
 		return {
